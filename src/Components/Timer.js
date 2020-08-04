@@ -16,26 +16,26 @@ const Timer = () => {
     setIsItBreak,
   } = useContext(TimeContext);
 
-  // let audioBreak = useRef();
-  // let audioSession = useRef();
-  // const playSoundBreak = () => {
-  //   audioBreak.current.play();
-  // };
-  // const playSoundSession = () => {
-  //   audioSession.current.play();
-  // };
+  const playSoundBreak = () => {
+    const audioBreak = document.getElementsByClassName("audio-break")[0];
+    audioBreak.play();
+  };
+  const playSoundSession = () => {
+    const audioSession = document.getElementsByClassName("audio-session")[0];
+    audioSession.play();
+  };
   let displaySession = "";
   if (timeInMinute === 0 && timeInSecond === 0 && isItBreak === false) {
     setTimeInSecond(59);
     setTimeInMinute(breakTime - 1);
     setIsItBreak(true);
-    // playSoundBreak();
+    playSoundBreak();
     console.log("first is called");
   } else if (timeInMinute === 0 && timeInSecond === 0 && isItBreak === true) {
     setTimeInSecond(59);
     setTimeInMinute(sessionTime - 1);
     setIsItBreak(false);
-    // playSoundSession();
+    playSoundSession();
     console.log("second is called");
   } else if (timeInSecond < 0) {
     setTimeInSecond((current) => (current = 59));
@@ -50,17 +50,13 @@ const Timer = () => {
 
   return (
     <div>
-      {/* <audio
-        ref={audioBreak}
-        type="audio/mp3"
-        src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"
-      ></audio>
-      <audio
-        ref={audioSession}
-        type="audio/mp3"
-        src="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"
-      ></audio> */}
-      {isItBreak ? <p>Break Time</p> : <p>Session Time</p>}
+      <audio className="audio-session">
+        <source src="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"></source>
+      </audio>
+      <audio className="audio-break">
+        <source src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"></source>
+      </audio>
+      {isItBreak ? <p>Break Time </p> : <p>Session Time</p>}
 
       {displaySession}
       <button
@@ -92,7 +88,7 @@ const Timer = () => {
       <button onClick={() => setTimeInSecond((current) => current + 1)}>
         increment
       </button>
-      <button onClick={() => setTimeInSecond((current) => current - 1)}>
+      <button onClick={() => setTimeInSecond((current) => current - 8)}>
         decrement
       </button>
     </div>
