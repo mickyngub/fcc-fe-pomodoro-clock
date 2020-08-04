@@ -11,7 +11,9 @@ const SessionLength = () => {
   return (
     <div id="session-label">
       <h2>session time is</h2>
-      <div id="session-length">{sessionTime}</div>
+      <div id="session-length" style={{ margin: "20px" }}>
+        {sessionTime}
+      </div>
 
       <button
         id="session-increment"

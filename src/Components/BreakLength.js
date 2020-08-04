@@ -6,7 +6,9 @@ const BreakLength = () => {
   return (
     <div id="break-label">
       <h2>Break Length is</h2>
-      <div id="break-length">{breakTime}</div>
+      <div id="break-length" style={{ margin: "20px" }}>
+        {breakTime}
+      </div>
       <button
         id="break-increment"
         onClick={() => {

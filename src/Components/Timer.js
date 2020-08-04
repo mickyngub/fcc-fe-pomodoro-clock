@@ -75,22 +75,18 @@ const Timer = () => {
         </div>
       )}
 
-      <div id="time-left">{displaySession}</div>
+      <div id="time-left" style={{ margin: "20px" }}>
+        {displaySession}
+      </div>
       <button
         id="start_stop"
         onClick={() => {
           setShouldUpdate((current) => !current);
         }}
       >
-        PLAY
+        PLAY/PAUSE
       </button>
-      <button
-        onClick={() => {
-          setShouldUpdate(false);
-        }}
-      >
-        PAUSE
-      </button>
+
       <button
         id="reset"
         onClick={() => {
@@ -104,12 +100,6 @@ const Timer = () => {
         }}
       >
         RESET
-      </button>
-      <button onClick={() => setTimeInSecond((current) => current + 1)}>
-        increment
-      </button>
-      <button onClick={() => setTimeInSecond((current) => current - 1)}>
-        decrement
       </button>
     </div>
   );
