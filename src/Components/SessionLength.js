@@ -9,17 +9,33 @@ const SessionLength = () => {
     setTimeInMinute,
   } = useContext(TimeContext);
   return (
-    <div>
-      <p>This is Session Length</p>
+    <div id="session-label">
+      <h2>session time is</h2>
+      <div id="session-length">{sessionTime}</div>
+
       <button
+        id="session-increment"
         onClick={() => {
-          setSessionTime((current) => current + 1);
-          setTimeInMinute((current) => current + 1);
+          setSessionTime((current) => {
+            if (current > 59) {
+              return current;
+            } else {
+              return current + 1;
+            }
+          });
+          setTimeInMinute((current) => {
+            if (current > 59) {
+              return current;
+            } else {
+              return current + 1;
+            }
+          });
         }}
       >
         increment
       </button>
       <button
+        id="session-decrement"
         onClick={
           sessionTime > 1
             ? () => {

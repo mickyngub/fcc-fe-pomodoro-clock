@@ -16,32 +16,43 @@ const Timer = () => {
     setIsItBreak,
   } = useContext(TimeContext);
 
-  const playSoundBreak = () => {
-    const audioBreak = document.getElementsByClassName("audio-break")[0];
-    audioBreak.play();
+  const playSound = () => {
+    const audio = document.getElementsByClassName("audio")[0];
+    audio.play();
   };
-  const playSoundSession = () => {
-    const audioSession = document.getElementsByClassName("audio-session")[0];
-    audioSession.play();
+
+  const pauseSound = () => {
+    const audio = document.getElementsByClassName("audio")[0];
+    audio.pause();
+    audio.currentTime = 0;
   };
   let displaySession = "";
   if (timeInMinute === 0 && timeInSecond === 0 && isItBreak === false) {
-    setTimeInSecond(59);
-    setTimeInMinute(breakTime - 1);
-    setIsItBreak(true);
-    playSoundBreak();
-    console.log("first is called");
+    playSound();
   } else if (timeInMinute === 0 && timeInSecond === 0 && isItBreak === true) {
-    setTimeInSecond(59);
-    setTimeInMinute(sessionTime - 1);
+    playSound();
+  }
+  if (timeInMinute === 0 && timeInSecond === -1 && isItBreak === false) {
+    setTimeInSecond(0);
+    setTimeInMinute(breakTime);
+    setIsItBreak(true);
+    console.log("first is called");
+  } else if (timeInMinute === 0 && timeInSecond === -1 && isItBreak === true) {
+    setTimeInSecond(0);
+    setTimeInMinute(sessionTime);
     setIsItBreak(false);
-    playSoundSession();
     console.log("second is called");
-  } else if (timeInSecond < 0) {
+  } else if (timeInSecond === -1) {
     setTimeInSecond((current) => (current = 59));
     setTimeInMinute((current) => current - 1);
   } else {
-    if (timeInSecond < 10 && timeInSecond >= 0) {
+    if (timeInMinute < 10 && timeInMinute >= 0) {
+      if (timeInSecond < 10 && timeInSecond >= 0) {
+        displaySession = `0${timeInMinute}:0${timeInSecond}`;
+      } else {
+        displaySession = `0${timeInMinute}:${timeInSecond}`;
+      }
+    } else if (timeInSecond < 10 && timeInSecond >= 0) {
       displaySession = `${timeInMinute}:0${timeInSecond}`;
     } else {
       displaySession = `${timeInMinute}:${timeInSecond}`;
@@ -50,18 +61,25 @@ const Timer = () => {
 
   return (
     <div>
-      <audio className="audio-session">
-        <source src="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"></source>
+      <audio id="beep" className="audio">
+        <source src="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"></source>
       </audio>
-      <audio className="audio-break">
-        <source src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"></source>
-      </audio>
-      {isItBreak ? <p>Break Time </p> : <p>Session Time</p>}
 
-      {displaySession}
+      {isItBreak ? (
+        <div id="timer-label">
+          <p>Break Time </p>
+        </div>
+      ) : (
+        <div id="timer-label">
+          <p>Session Time</p>
+        </div>
+      )}
+
+      <div id="time-left">{displaySession}</div>
       <button
+        id="start_stop"
         onClick={() => {
-          setShouldUpdate(true);
+          setShouldUpdate((current) => !current);
         }}
       >
         PLAY
@@ -74,13 +92,15 @@ const Timer = () => {
         PAUSE
       </button>
       <button
+        id="reset"
         onClick={() => {
-          setSessionTime(25);
-          setBreakTime(5);
           setTimeInMinute(25);
           setTimeInSecond(0);
-
+          setSessionTime(25);
+          setBreakTime(5);
+          setIsItBreak(false);
           setShouldUpdate(false);
+          pauseSound();
         }}
       >
         RESET
@@ -88,7 +108,7 @@ const Timer = () => {
       <button onClick={() => setTimeInSecond((current) => current + 1)}>
         increment
       </button>
-      <button onClick={() => setTimeInSecond((current) => current - 8)}>
+      <button onClick={() => setTimeInSecond((current) => current - 1)}>
         decrement
       </button>
     </div>

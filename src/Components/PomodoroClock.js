@@ -50,13 +50,9 @@ const PomodoroClock = () => {
           </Grid>
           <Grid item xs={6}>
             <BreakLength />
-            <h2>break time is</h2>
-            {breakTime}
           </Grid>
           <Grid item xs={6}>
             <SessionLength />
-            <h2>session time is</h2>
-            {sessionTime}
           </Grid>
           <Grid item xs={12}>
             <Timer />

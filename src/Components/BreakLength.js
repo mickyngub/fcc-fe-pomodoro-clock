@@ -4,16 +4,25 @@ import { TimeContext } from "./TimeContext";
 const BreakLength = () => {
   const { breakTime, setBreakTime } = useContext(TimeContext);
   return (
-    <div>
-      <p>This is Break Length</p>
+    <div id="break-label">
+      <h2>Break Length is</h2>
+      <div id="break-length">{breakTime}</div>
       <button
+        id="break-increment"
         onClick={() => {
-          setBreakTime((current) => current + 1);
+          setBreakTime((current) => {
+            if (current > 59) {
+              return current;
+            } else {
+              return current + 1;
+            }
+          });
         }}
       >
         increment
       </button>
       <button
+        id="break-decrement"
         onClick={
           breakTime > 1
             ? () => {
