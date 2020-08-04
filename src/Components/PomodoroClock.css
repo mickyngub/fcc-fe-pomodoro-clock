@@ -1,0 +1,9 @@
+.grid-container {
+  display: grid;
+  border: 20px solid steelblue;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.grid-item {
+  border: 5px solid pink;
+}
