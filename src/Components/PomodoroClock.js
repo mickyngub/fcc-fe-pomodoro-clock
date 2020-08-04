@@ -16,6 +16,7 @@ const PomodoroClock = () => {
   const [timeInMinute, setTimeInMinute] = useState(sessionTime);
   const [timeInSecond, setTimeInSecond] = useState(0);
   const [shouldUpdate, setShouldUpdate] = useState(false);
+  const [isItBreak, setIsItBreak] = useState(false);
   useEffect(() => {
     if (shouldUpdate) {
       const interval = setInterval(
@@ -34,6 +35,12 @@ const PomodoroClock = () => {
         setSessionTime,
         timeInMinute,
         setTimeInMinute,
+        timeInSecond,
+        setTimeInSecond,
+        shouldUpdate,
+        setShouldUpdate,
+        isItBreak,
+        setIsItBreak,
       }}
     >
       <Container maxWidth="md" style={{ border: "10px solid blue" }}>
@@ -53,25 +60,6 @@ const PomodoroClock = () => {
           </Grid>
           <Grid item xs={12}>
             <Timer />
-            <h2>Timer is</h2>
-            {timeInSecond < 0
-              ? (setTimeInSecond(59), setTimeInMinute((current) => current - 1))
-              : timeInSecond < 10 && timeInSecond >= 0
-              ? `${timeInMinute}:0${timeInSecond}`
-              : `${timeInMinute}:${timeInSecond}`}
-            <button onClick={() => setTimeInSecond((current) => current + 1)}>
-              increment
-            </button>
-            <button onClick={() => setTimeInSecond((current) => current - 1)}>
-              decrement
-            </button>
-            <button
-              onClick={() => {
-                setShouldUpdate(true);
-              }}
-            >
-              PLAY
-            </button>
           </Grid>
         </Grid>
       </Container>
